@@ -5,6 +5,7 @@
 import PySimpleGUI as sg
 import json
 
+
 lista_produto = []
 carrinho = []
 cupom = int(0)
@@ -47,13 +48,15 @@ def pagar(valor_pagar):
         sg.Text(f'R$ 0.00', size=(18, 1), key="R$", justification='right', font=("Any", 18))],
         [sg.Text("", size=(10, 1))],
         [sg.Button('CARTAO', size=(20, 1)), sg.Button('PIX', size=(20, 1)), sg.Button('DINHEIRO', size=(20, 1))],
+        [sg.T("")],
 
     ]
     layout = [
         [sg.Text("CONDIÇÃO DE PAGAMENTO", size=(35, 1), justification='center', font=("Any", 18))],
         [sg.Text("",size=(8,1)),sg.Image(filename="111.png",size=(400,100))],
         [sg.Text("", size=(10, 1))],
-        [sg.Frame("",frame6)]
+        [sg.Frame("",frame6)],
+        [sg.Text("",size=(20, 1)),sg.Button("SAIR" ,size=(20, 1), font=("Any", 12),button_color="red")],
 
     ]
 
@@ -66,8 +69,8 @@ def pagar(valor_pagar):
         troco = 0
         window["valor"].update(f"R$ {valor_pagar:.2f}")
 
-        if event == (sg.WIN_CLOSED):
-            sg.popup("Cancelar forma de Pagamento", font=("Any", 12))
+        if event in (sg.WIN_CLOSED, "SAIR"):
+            sg.popup("Cancelar forma de Pagamento",size=(10,1), font=("Any", 12))
             #return soma2
 
 
@@ -202,8 +205,8 @@ while True:
         window['-CAIXA-'].update('      CAIXA ABERTO')
         window['-SUBTOTAL-'].update(f'R$ {valor_pagar:.2f}')
         window["-TABELA-"].update("")
-        dicionario=['Item','COD','EAN','DESCRICAO', "QTD" ,'UNITARIO', 'SUBTOTAL']
-        window['-TABELA-'].update(values=dicionario)
+        carrinho=[cupom]
+        
         # dentro deste bloco de eventos serão registrados apenas os botoes (OK,DELETE,PAGAR,VOLTAR)
         while True:
             try:
